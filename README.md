@@ -22,6 +22,7 @@ Future work:
 * Verify user accesses to secrets
 * Implement other endpoints including secret creation
 * Return appropriate HTTP error codes
+* Use diesel ORM instead of tokio_postgres? Server is probably vulnerable to SQL injection at the moment.
 * Un-hardcode things
 * Way more error checking
 * Tests
