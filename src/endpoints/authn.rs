@@ -66,9 +66,10 @@ pub async fn get_api_key(
 
     let user = user_pass[0];
     let pass = user_pass[1];
+    let account = path_params.into_inner().account;
 
     // TODO: prevent SQL injection
-    let role_id = format!("myConjurAccount:user:{}", user);
+    let role_id = format!("{}:user:{}", account, user);
     let encrypted_api_key = db::query(&api_context.db, "SELECT * FROM public.credentials WHERE role_id=$1;", &role_id, "api_key").await;
     if let None = encrypted_api_key {
         // TODO: return not authorized?
@@ -83,7 +84,8 @@ pub async fn get_api_key(
         return bad_request_err;
     }
 
-    api_context.current_user.replace(String::from(user));
+    api_context.user.replace(String::from(user));
+    api_context.account.replace(account);
 
     Ok(Response::builder()
         .header(http::header::CONTENT_TYPE, "text/plain")
@@ -106,7 +108,7 @@ pub async fn get_access_token(
 ) -> Result<HttpResponseOk<()>, HttpError>
 {
     let mut api_context = rqctx.context().lock().await;
-    let login = path_params.into_inner().login;
+    let path_params = path_params.into_inner();
     let body = update.as_str()?;
 
     let bad_request_err = Err(HttpError::for_status(
@@ -114,14 +116,19 @@ pub async fn get_access_token(
         http::StatusCode::BAD_REQUEST,
     ));
     
-    let user = login;
+    let user  = path_params.login;
+    let user: Vec<(String, String)> = form_urlencoded::parse(user.as_bytes()).into_owned().collect();
+    let user = &user[0].0;
+
     let pass = String::from(body);
+    let account = path_params.account;
 
     // TODO: prevent SQL injection
-    let role_id = format!("myConjurAccount:user:{}", user);
+    let role_id = format!("{}:user:{}", account, user);
+    println!("{:?}", role_id);
     let encrypted_api_key = db::query(&api_context.db, "SELECT * FROM public.credentials WHERE role_id=$1;", &role_id, "api_key").await;
     if let None = encrypted_api_key {
-        // TODO: return not authorized?
+        // TODO: return correct error code
         return bad_request_err;
     }
 
@@ -129,11 +136,12 @@ pub async fn get_access_token(
 
     // TODO: secure compare?
     if pass.ne(&api_key) {
-        // TODO: return not authorized?
+        // TODO: return correct error code
         return bad_request_err;
     }
 
-    api_context.current_user.replace(String::from(user));
+    api_context.user.replace(String::from(user));
+    api_context.account.replace(account);
 
     Ok(HttpResponseOk(()))
 }

@@ -44,8 +44,7 @@ impl Slosilo {
     }
 
     /*
-    pub fn encrypt(plaintext: &str) -> &[u8] {
-
+    pub fn encrypt(&self, plaintext: &str, aad: &str) -> Vec<u8> {
     }
     */
 }

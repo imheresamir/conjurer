@@ -40,6 +40,8 @@ async fn main() -> Result<(), String> {
     api.register(endpoints::authn::get_api_key).unwrap();
     api.register(endpoints::authn::get_access_token).unwrap();
     api.register(endpoints::secrets::get_secret).unwrap();
+    //api.register(endpoints::secrets::create_secret).unwrap();
+    api.register(endpoints::status::who_am_i).unwrap();
 
     let ctx = Mutex::new(ConjurContext::new(client, "g8zfk7UZkESkoCyOfqtC1Q82CQsynFoDKjIN3LF9De4="));
 
