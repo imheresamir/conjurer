@@ -46,7 +46,6 @@ pub async fn get_api_key(
         http::StatusCode::BAD_REQUEST,
     ));
 
-    // TODO: path params not validated
     // TODO: in this handler verify {login} == "login"
     
     if let None = auth_header {
