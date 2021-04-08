@@ -1,5 +1,5 @@
 [package]
-name = "conjur-rs"
+name = "conjurer"
 version = "0.1.0"
 authors = ["Samir Shetty <samirshetty23@gmail.com>"]
 edition = "2018"
