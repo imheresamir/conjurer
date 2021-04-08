@@ -1,0 +1,13 @@
+{
+  "created_roles": {
+    "myConjurAccount:user:Dave@BotApp": {
+      "id": "myConjurAccount:user:Dave@BotApp",
+      "api_key": "25jgsadzzq2n2q32cm826w6gpvaz2v201ahhpg73nm2yb1c6ftjp"
+    },
+    "myConjurAccount:host:BotApp/myDemoApp": {
+      "id": "myConjurAccount:host:BotApp/myDemoApp",
+      "api_key": "p53nc03pcxs2c106j1wvyke66s1xstk0q9dx95a288ywsjapnzp4"
+    }
+  },
+  "version": 1
+}
