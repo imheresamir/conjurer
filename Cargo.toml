@@ -1,0 +1,20 @@
+[package]
+name = "conjur-rs"
+version = "0.1.0"
+authors = ["Samir Shetty <samirshetty23@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+tokio = "1.4.0"
+dropshot = "0.5.1"
+http = "0.2.3"
+schemars = "0.8.2"
+serde = "1.0.125"
+hyper = "0.14.5"
+base64 = "0.13.0"
+tokio-postgres = "0.7.1"
+aes-gcm = "0.8.0"
+regex = "1.4.5"
+form_urlencoded = "1.0.1"
